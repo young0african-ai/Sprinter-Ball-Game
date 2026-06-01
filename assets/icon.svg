@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="92" fill="#182023"/>
+  <path d="M72 356c36-42 66-58 102-48 22 6 38 20 59 24 28 6 52-7 84-34 39-33 79-41 123-23v105H72z" fill="#2f7241"/>
+  <circle cx="147" cy="183" r="58" fill="#1f6a3c"/>
+  <circle cx="195" cy="162" r="54" fill="#2d874c"/>
+  <circle cx="239" cy="188" r="58" fill="#1f6a3c"/>
+  <path d="M295 159l91 145H204z" fill="#d65d48"/>
+  <path d="M295 159l-91 145h91z" fill="#f1bd55"/>
+  <path d="M273 254h44v50h-44z" fill="#783027"/>
+  <circle cx="182" cy="347" r="29" fill="#54c8ff"/>
+  <circle cx="331" cy="348" r="29" fill="#ff6b76"/>
+  <path d="M170 340h24M319 341h24" stroke="#101416" stroke-width="10" stroke-linecap="round"/>
+  <text x="256" y="444" fill="#ffe2a4" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" text-anchor="middle">SB</text>
+</svg>

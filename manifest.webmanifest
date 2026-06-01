@@ -1,0 +1,17 @@
+{
+  "name": "Sprinter Ball",
+  "short_name": "Sprinter Ball",
+  "description": "A two-player hide and seek game by YoungOfAfrica with running, hiding spots, tagging, and timed rounds.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#121719",
+  "theme_color": "#182023",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
