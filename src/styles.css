@@ -654,3 +654,18 @@ body.landscape-mode .mobile-controls {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
   }
 }
+
+@media (pointer: coarse), (max-width: 760px) {
+  .game-shell,
+  body.landscape-mode .game-shell {
+    width: min(1120px, calc(100vw - 24px));
+  }
+
+  .play-area,
+  body.landscape-mode .play-area {
+    width: 100%;
+    aspect-ratio: 960 / 620;
+    height: auto;
+    min-height: 0;
+  }
+}
