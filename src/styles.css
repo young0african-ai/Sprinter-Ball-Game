@@ -14,6 +14,7 @@ body {
   min-height: 100vh;
   display: grid;
   place-items: center;
+  overflow-y: auto;
   background:
     radial-gradient(circle at 18% 15%, rgba(50, 120, 76, 0.35), transparent 28%),
     linear-gradient(135deg, #182023 0%, #111618 52%, #1b2018 100%);
@@ -145,6 +146,33 @@ canvas {
   grid-template-columns: 1fr 1fr auto auto auto;
 }
 
+.mode-panel {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 14, 15, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.mode-panel label {
+  color: #b8c5b2;
+  font-weight: 800;
+}
+
+.mode-panel select {
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  background: #f1bd55;
+  color: #22180b;
+  font: inherit;
+  font-weight: 800;
+  padding: 0 12px;
+}
+
 .mobile-controls {
   display: none;
   gap: 10px;
@@ -186,6 +214,15 @@ canvas {
   padding: 0 10px;
   touch-action: none;
   user-select: none;
+}
+
+body.computer-mode .player-two-touch {
+  display: none;
+}
+
+body.computer-mode .mobile-controls {
+  grid-template-columns: minmax(220px, 520px);
+  justify-content: center;
 }
 
 .controls > div {
@@ -274,7 +311,7 @@ canvas {
 @media (max-width: 720px) {
   body {
     place-items: start center;
-    padding: 10px 0;
+    padding: 10px 0 260px;
   }
 
   .hud {
@@ -294,6 +331,14 @@ canvas {
   .mobile-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    background: rgba(18, 23, 25, 0.92);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    margin: 0 -12px;
+    padding: 10px 12px;
+    backdrop-filter: blur(8px);
   }
 }
 

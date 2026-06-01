@@ -7,6 +7,7 @@ const helpButton = document.querySelector("#helpButton");
 const soundButton = document.querySelector("#soundButton");
 const howToPlay = document.querySelector("#howToPlay");
 const closeHelpButton = document.querySelector("#closeHelpButton");
+const opponentMode = document.querySelector("#opponentMode");
 const seekerName = document.querySelector("#seekerName");
 const roundText = document.querySelector("#roundText");
 const timerText = document.querySelector("#timerText");
@@ -52,6 +53,15 @@ let state = {
   timeLeft: 45,
   lastTick: performance.now(),
   winnerText: "",
+  opponent: "human",
+  aiTimer: 0,
+  aiTarget: null,
+};
+
+const aiSettings = {
+  easy: { speed: 0.72, mistake: 0.42, hideRange: 42, refresh: 1.4 },
+  medium: { speed: 0.92, mistake: 0.22, hideRange: 70, refresh: 0.85 },
+  hard: { speed: 1.08, mistake: 0.08, hideRange: 104, refresh: 0.45 },
 };
 
 function makePlayer(name, color, x, y, controls) {
@@ -102,9 +112,14 @@ function fullReset() {
     timeLeft: 45,
     lastTick: performance.now(),
     winnerText: "",
+    opponent: opponentMode.value,
+    aiTimer: 0,
+    aiTarget: null,
   };
   players[0].score = 0;
   players[1].score = 0;
+  players[1].name = state.opponent === "human" ? "Player 2" : "Computer";
+  document.body.classList.toggle("computer-mode", state.opponent !== "human");
   resetRound(false);
   state.round = 1;
   state.seeker = 0;
@@ -150,11 +165,11 @@ function canHide(player) {
   return hidingSpots.find((spot) => insideRect(player, spot));
 }
 
-function updatePlayer(player, dt) {
+function updatePlayer(player, dt, input = "human") {
   const c = player.controls;
   if (player.hideCooldown > 0) player.hideCooldown -= dt;
 
-  const hidePressed = isPressed(c.hide);
+  const hidePressed = input === "ai" ? player.aiHide : isPressed(c.hide);
   if (hidePressed && !player.hidePressed && player.hideCooldown <= 0) {
     if (player.hiddenIn) {
       player.hiddenIn = null;
@@ -174,10 +189,15 @@ function updatePlayer(player, dt) {
 
   let dx = 0;
   let dy = 0;
-  if (isPressed(c.up)) dy -= 1;
-  if (isPressed(c.down)) dy += 1;
-  if (isPressed(c.left)) dx -= 1;
-  if (isPressed(c.right)) dx += 1;
+  if (input === "ai") {
+    dx = player.aiDx || 0;
+    dy = player.aiDy || 0;
+  } else {
+    if (isPressed(c.up)) dy -= 1;
+    if (isPressed(c.down)) dy += 1;
+    if (isPressed(c.left)) dx -= 1;
+    if (isPressed(c.right)) dx += 1;
+  }
 
   if (dx || dy) {
     const length = Math.hypot(dx, dy);
@@ -185,8 +205,9 @@ function updatePlayer(player, dt) {
     dy /= length;
   }
 
-  const running = isPressed(c.run) && player.stamina > 2 && (dx || dy);
-  const speed = running ? 225 : 142;
+  const running = (input === "ai" ? player.aiRun : isPressed(c.run)) && player.stamina > 2 && (dx || dy);
+  const speedMultiplier = input === "ai" ? aiSettings[state.opponent].speed : 1;
+  const speed = (running ? 225 : 142) * speedMultiplier;
   player.stamina = Math.max(0, Math.min(100, player.stamina + (running ? -38 : 24) * dt));
 
   movePlayer(player, dx * speed * dt, dy * speed * dt);
@@ -227,7 +248,13 @@ function showBetweenRound(title, text) {
 }
 
 function update(dt) {
-  for (const player of players) updatePlayer(player, dt);
+  updatePlayer(players[0], dt);
+  if (state.opponent === "human") {
+    updatePlayer(players[1], dt);
+  } else {
+    updateAi(dt);
+    updatePlayer(players[1], dt, "ai");
+  }
   state.timeLeft -= dt;
 
   const hider = players[state.seeker === 0 ? 1 : 0];
@@ -244,6 +271,72 @@ function updateHud() {
   roundText.textContent = `${Math.min(state.round, state.maxRounds)} / ${state.maxRounds}`;
   timerText.textContent = Math.max(0, Math.ceil(state.timeLeft));
   scoreText.textContent = `${players[0].score} - ${players[1].score}`;
+}
+
+function updateAi(dt) {
+  const computer = players[1];
+  const human = players[0];
+  const settings = aiSettings[state.opponent];
+  state.aiTimer -= dt;
+  computer.aiHide = false;
+  computer.aiRun = true;
+
+  if (state.aiTimer <= 0 || !state.aiTarget) {
+    state.aiTimer = settings.refresh;
+    state.aiTarget = chooseAiTarget(computer, human, settings);
+  }
+
+  const wrongWay = Math.random() < settings.mistake * dt;
+  const target = wrongWay ? { x: WIDTH - state.aiTarget.x, y: HEIGHT - state.aiTarget.y } : state.aiTarget;
+  const dx = target.x - computer.x;
+  const dy = target.y - computer.y;
+  const distance = Math.hypot(dx, dy);
+
+  computer.aiDx = distance > 4 ? dx / distance : 0;
+  computer.aiDy = distance > 4 ? dy / distance : 0;
+
+  const computerIsHider = players[state.seeker] !== computer;
+  if (computerIsHider) {
+    const spot = canHide(computer);
+    const seekerDistance = Math.hypot(computer.x - human.x, computer.y - human.y);
+    computer.aiHide = !!spot && seekerDistance < settings.hideRange;
+  }
+}
+
+function chooseAiTarget(computer, human, settings) {
+  const computerIsSeeker = players[state.seeker] === computer;
+  if (computerIsSeeker) {
+    if (human.hiddenIn) return nearestSpot(computer);
+    return { x: human.x, y: human.y };
+  }
+
+  const dangerX = computer.x - human.x;
+  const dangerY = computer.y - human.y;
+  const dangerDistance = Math.hypot(dangerX, dangerY);
+  if (dangerDistance < 190 + settings.hideRange) {
+    const safestSpot = hidingSpots
+      .map((spot) => ({
+        x: spot.x + spot.w / 2,
+        y: spot.y + spot.h / 2,
+        score: Math.hypot(spot.x + spot.w / 2 - human.x, spot.y + spot.h / 2 - human.y) -
+          Math.hypot(spot.x + spot.w / 2 - computer.x, spot.y + spot.h / 2 - computer.y),
+      }))
+      .sort((a, b) => b.score - a.score)[0];
+    return safestSpot || { x: WIDTH - human.x, y: HEIGHT - human.y };
+  }
+
+  const randomSpot = hidingSpots[Math.floor(Math.random() * hidingSpots.length)];
+  return { x: randomSpot.x + randomSpot.w / 2, y: randomSpot.y + randomSpot.h / 2 };
+}
+
+function nearestSpot(player) {
+  return hidingSpots
+    .map((spot) => ({
+      x: spot.x + spot.w / 2,
+      y: spot.y + spot.h / 2,
+      distance: Math.hypot(spot.x + spot.w / 2 - player.x, spot.y + spot.h / 2 - player.y),
+    }))
+    .sort((a, b) => a.distance - b.distance)[0];
 }
 
 function draw() {
@@ -514,6 +607,10 @@ soundButton.addEventListener("click", () => {
   soundEnabled = !soundEnabled;
   soundButton.textContent = soundEnabled ? "Sound On" : "Sound Off";
   if (soundEnabled) playSound("start");
+});
+
+opponentMode.addEventListener("change", () => {
+  fullReset();
 });
 
 fullReset();

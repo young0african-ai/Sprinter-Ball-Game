@@ -13,6 +13,7 @@ One player is the seeker. The other player is the hider. Run through the map, du
 - How to Play screen
 - Sound effects with a sound toggle
 - Automatic touch controls on phones and tablets
+- Computer opponent with Easy, Medium, and Hard levels
 - Installable web app setup with an icon and offline cache
 
 ## How to Play
@@ -30,6 +31,8 @@ Player 2:
 - Hide: `Enter`
 
 The seeker scores by tagging the hider. The hider scores by staying hidden until the timer reaches zero.
+
+Use the opponent selector to play with two people or against the computer. On phones and tablets, touch controls appear automatically and stay near the bottom of the screen while the page can still scroll.
 
 ## Run Locally
 

@@ -7,7 +7,7 @@
   <title>Sprinter Ball Game</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="src/styles.css?v=7">
+  <link rel="stylesheet" href="src/styles.css?v=8">
 </head>
 <body>
   <main class="game-shell">
@@ -80,8 +80,18 @@
     </section>
 
     <p class="credit">© 2026 YoungOfAfrica. All rights reserved.</p>
+    <section class="mode-panel" aria-label="Game mode">
+      <label for="opponentMode">Opponent</label>
+      <select id="opponentMode">
+        <option value="human">2 Players</option>
+        <option value="easy">Computer - Easy</option>
+        <option value="medium">Computer - Medium</option>
+        <option value="hard">Computer - Hard</option>
+      </select>
+    </section>
+
     <section class="mobile-controls" aria-label="Touch controls">
-      <div class="touch-pad">
+      <div class="touch-pad player-one-touch">
         <strong>Player 1</strong>
         <div class="touch-grid">
           <span></span>
@@ -96,7 +106,7 @@
           <button type="button" data-touch="e">Hide</button>
         </div>
       </div>
-      <div class="touch-pad">
+      <div class="touch-pad player-two-touch">
         <strong>Player 2</strong>
         <div class="touch-grid">
           <span></span>
@@ -114,7 +124,7 @@
     </section>
   </main>
 
-  <script src="src/game.js?v=7"></script>
+  <script src="src/game.js?v=8"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
