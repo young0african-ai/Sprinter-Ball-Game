@@ -18,6 +18,8 @@ const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const keys = new Set();
 const touchKeys = new Set();
+const runKeys = new Set(["shift", "/"]);
+const hideKeys = new Set(["e", "enter"]);
 let audioContext = null;
 let soundEnabled = true;
 
@@ -111,6 +113,9 @@ function resetRound(switchSeeker = true) {
 function fullReset() {
   keys.clear();
   touchKeys.clear();
+  for (const button of document.querySelectorAll("[data-touch].active")) {
+    button.classList.remove("active");
+  }
   state = {
     started: false,
     round: 1,
@@ -617,10 +622,25 @@ for (const button of document.querySelectorAll("[data-touch]")) {
   const key = button.dataset.touch;
   const press = (event) => {
     event.preventDefault();
+    if (runKeys.has(key)) {
+      if (touchKeys.has(key)) {
+        touchKeys.delete(key);
+        button.classList.remove("active");
+      } else {
+        touchKeys.add(key);
+        button.classList.add("active");
+      }
+      return;
+    }
+
     touchKeys.add(key);
+    if (hideKeys.has(key)) {
+      setTimeout(() => touchKeys.delete(key), 180);
+    }
   };
   const release = (event) => {
     event.preventDefault();
+    if (runKeys.has(key) || hideKeys.has(key)) return;
     touchKeys.delete(key);
   };
   button.addEventListener("pointerdown", press);
