@@ -486,20 +486,21 @@ body.landscape-mode .touch-system button {
 
   .play-area {
     aspect-ratio: auto;
-    height: min(76vh, 620px);
-    min-height: 500px;
+    height: min(72vh, 590px);
+    min-height: 430px;
   }
 
   .mobile-controls {
     position: absolute;
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
     grid-template-columns: 1fr 1fr auto;
-    max-height: 46%;
+    gap: 6px;
+    max-height: 38%;
     overflow-y: auto;
     margin: 0;
-    padding: 8px;
+    padding: 6px;
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 8px;
     z-index: 5;
@@ -516,13 +517,13 @@ body.landscape-mode .touch-system button {
   }
 
   .play-area {
-    height: min(78vh, 640px);
-    min-height: 520px;
+    height: min(74vh, 610px);
+    min-height: 460px;
   }
 
   .mobile-controls {
     grid-template-columns: 1fr 1fr;
-    max-height: 48%;
+    max-height: 40%;
   }
 
   .touch-system {
@@ -536,13 +537,13 @@ body.landscape-mode .touch-system button {
 
 @media (pointer: coarse) and (orientation: landscape) {
   .play-area {
-    height: min(74vh, 540px);
-    min-height: 320px;
+    height: min(78vh, 560px);
+    min-height: 300px;
   }
 
   .mobile-controls {
     grid-template-columns: 1fr 1fr auto;
-    max-height: 42%;
+    max-height: 34%;
   }
 }
 
@@ -551,19 +552,93 @@ body.landscape-mode {
 }
 
 body.landscape-mode .play-area {
-  height: min(74vh, 540px);
-  min-height: 320px;
+  height: min(78vh, 560px);
+  min-height: 300px;
 }
 
 body.landscape-mode .mobile-controls {
   position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
   grid-template-columns: 1fr 1fr auto;
-  max-height: 42%;
+  gap: 6px;
+  max-height: 34%;
   margin: 0;
-  padding: 8px;
+  padding: 6px;
   border-radius: 8px;
   z-index: 5;
+}
+
+.mobile-controls .touch-pad {
+  padding: 6px;
+}
+
+.mobile-controls .touch-pad strong {
+  margin-bottom: 4px;
+  font-size: 0.78rem;
+}
+
+.mobile-controls .touch-grid,
+.mobile-controls .touch-actions {
+  gap: 4px;
+}
+
+.mobile-controls .touch-grid span,
+.mobile-controls .touch-pad button,
+.mobile-controls .touch-system button {
+  min-height: 34px;
+  padding: 0 8px;
+  font-size: 0.84rem;
+}
+
+.mobile-controls .touch-grid button {
+  font-size: 1.12rem;
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  .mobile-controls {
+    background: transparent;
+    border: 0;
+    backdrop-filter: none;
+    pointer-events: none;
+  }
+
+  .touch-pad,
+  .touch-system {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .touch-pad strong {
+    display: none;
+  }
+
+  .touch-grid span {
+    min-height: 36px;
+  }
+
+  .touch-grid button {
+    background: transparent;
+    color: #ffe2a4;
+    border: 0;
+    border-radius: 999px;
+    font-size: 1.55rem;
+    min-height: 40px;
+    padding: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+  }
+
+  .touch-grid button:hover {
+    background: transparent;
+  }
+
+  .touch-actions button,
+  .touch-system button {
+    background: rgba(241, 189, 85, 0.92);
+    color: #22180b;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  }
 }
