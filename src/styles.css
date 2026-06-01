@@ -484,10 +484,14 @@ body.landscape-mode .touch-system button {
     padding-bottom: 12px;
   }
 
+  .game-shell {
+    width: min(100vw - 12px, 720px);
+  }
+
   .play-area {
     aspect-ratio: auto;
-    height: min(72vh, 590px);
-    min-height: 430px;
+    height: clamp(360px, 62vh, 500px);
+    min-height: 0;
   }
 
   .mobile-controls {
@@ -517,8 +521,8 @@ body.landscape-mode .touch-system button {
   }
 
   .play-area {
-    height: min(74vh, 610px);
-    min-height: 460px;
+    height: clamp(340px, 58vh, 470px);
+    min-height: 0;
   }
 
   .mobile-controls {
@@ -536,9 +540,13 @@ body.landscape-mode .touch-system button {
 }
 
 @media (pointer: coarse) and (orientation: landscape) {
+  .game-shell {
+    width: min(82vw, 760px);
+  }
+
   .play-area {
-    height: min(78vh, 560px);
-    min-height: 300px;
+    height: clamp(260px, 68vh, 420px);
+    min-height: 0;
   }
 
   .mobile-controls {
@@ -551,9 +559,13 @@ body.landscape-mode {
   padding-bottom: 12px;
 }
 
+body.landscape-mode .game-shell {
+  width: min(82vw, 760px);
+}
+
 body.landscape-mode .play-area {
-  height: min(78vh, 560px);
-  min-height: 300px;
+  height: clamp(260px, 68vh, 420px);
+  min-height: 0;
 }
 
 body.landscape-mode .mobile-controls {
