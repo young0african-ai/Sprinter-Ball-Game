@@ -861,3 +861,23 @@ body.landscape-mode .touch-system {
     font-size: 0.72rem;
   }
 }
+
+@media (pointer: coarse), (max-width: 760px) {
+  .touch-actions,
+  .player-two-touch .touch-actions,
+  body.landscape-mode .touch-actions,
+  body.landscape-mode .player-two-touch .touch-actions {
+    position: static;
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    margin-top: 4px;
+    transform: none;
+  }
+
+  .touch-actions button {
+    min-height: 28px;
+    font-size: 0.72rem;
+  }
+}
