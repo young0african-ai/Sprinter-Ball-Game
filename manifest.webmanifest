@@ -4,6 +4,7 @@
   "description": "A two-player hide and seek game by YoungOfAfrica with running, hiding spots, tagging, and timed rounds.",
   "start_url": "index.html",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#121719",
   "theme_color": "#182023",
   "icons": [

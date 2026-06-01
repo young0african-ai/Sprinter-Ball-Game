@@ -422,3 +422,31 @@ body.computer-mode .mobile-controls {
     grid-template-columns: 1fr auto;
   }
 }
+
+body.landscape-mode {
+  padding-bottom: 165px;
+}
+
+body.landscape-mode .game-shell {
+  width: min(100vw - 12px, 1120px);
+}
+
+body.landscape-mode .play-area {
+  aspect-ratio: auto;
+  height: min(52vh, 440px);
+}
+
+body.landscape-mode .hud {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+body.landscape-mode .mobile-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  max-height: 155px;
+  overflow-y: auto;
+}
+
+body.landscape-mode.computer-mode .mobile-controls {
+  grid-template-columns: 1fr auto;
+}

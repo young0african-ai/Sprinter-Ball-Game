@@ -169,7 +169,14 @@ function insideRect(player, rect) {
 }
 
 function canHide(player) {
-  return hidingSpots.find((spot) => insideRect(player, spot));
+  return hidingSpots.find((spot) => insideRect(player, spot) || nearSpot(player, spot));
+}
+
+function nearSpot(player, spot) {
+  const centerX = spot.x + spot.w / 2;
+  const centerY = spot.y + spot.h / 2;
+  const hideRadius = Math.max(spot.w, spot.h) / 2 + player.r + 18;
+  return Math.hypot(player.x - centerX, player.y - centerY) <= hideRadius;
 }
 
 function updatePlayer(player, dt, input = "human") {
@@ -188,6 +195,8 @@ function updatePlayer(player, dt, input = "human") {
         player.hideCooldown = 0.35;
         playSound("hide");
       }
+    } else {
+      player.hideCooldown = 0.18;
     }
   }
   player.hidePressed = hidePressed;
@@ -484,6 +493,7 @@ function drawPlayers() {
     ctx.arc(player.x + 6, player.y - 4, 2.5, 0, Math.PI * 2);
     ctx.fill();
 
+    drawHideReady(player);
     drawStamina(player);
   }
 }
@@ -494,6 +504,17 @@ function drawHiddenMarker(player) {
   ctx.beginPath();
   ctx.arc(spot.x + spot.w / 2, spot.y + spot.h / 2, 12, 0, Math.PI * 2);
   ctx.fill();
+}
+
+function drawHideReady(player) {
+  if (players[state.seeker] === player || player.hiddenIn || !canHide(player)) return;
+  ctx.strokeStyle = "rgba(255, 224, 147, 0.9)";
+  ctx.lineWidth = 3;
+  ctx.setLineDash([6, 6]);
+  ctx.beginPath();
+  ctx.arc(player.x, player.y, player.r + 9, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
 }
 
 function drawStamina(player) {
@@ -516,6 +537,12 @@ function drawMiniHints() {
 
 function isPressed(key) {
   return keys.has(key) || touchKeys.has(key);
+}
+
+function updateOrientationLayout() {
+  const isTouchLike = matchMedia("(pointer: coarse)").matches || innerWidth <= 760;
+  const isLandscape = innerWidth > innerHeight;
+  document.body.classList.toggle("landscape-mode", isTouchLike && isLandscape);
 }
 
 function getAudioContext() {
@@ -581,6 +608,11 @@ window.addEventListener("keyup", (event) => {
   keys.delete(event.key.toLowerCase());
 });
 
+window.addEventListener("resize", updateOrientationLayout);
+window.addEventListener("orientationchange", () => {
+  setTimeout(updateOrientationLayout, 150);
+});
+
 for (const button of document.querySelectorAll("[data-touch]")) {
   const key = button.dataset.touch;
   const press = (event) => {
@@ -622,4 +654,5 @@ opponentMode.addEventListener("change", () => {
 });
 
 fullReset();
+updateOrientationLayout();
 requestAnimationFrame(loop);
