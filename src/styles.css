@@ -219,6 +219,11 @@ canvas {
   user-select: none;
 }
 
+.touch-grid button {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
 .touch-system {
   display: grid;
   align-items: stretch;
@@ -396,7 +401,7 @@ body.computer-mode .mobile-controls {
 
 @media (pointer: coarse) and (orientation: landscape) {
   body {
-    padding-bottom: 165px;
+    padding-bottom: 118px;
   }
 
   .game-shell {
@@ -405,7 +410,7 @@ body.computer-mode .mobile-controls {
 
   .play-area {
     aspect-ratio: auto;
-    height: min(52vh, 440px);
+    height: min(68vh, 460px);
   }
 
   .hud {
@@ -414,7 +419,7 @@ body.computer-mode .mobile-controls {
 
   .mobile-controls {
     grid-template-columns: 1fr 1fr auto;
-    max-height: 155px;
+    max-height: 112px;
     overflow-y: auto;
   }
 
@@ -424,7 +429,7 @@ body.computer-mode .mobile-controls {
 }
 
 body.landscape-mode {
-  padding-bottom: 165px;
+  padding-bottom: 118px;
 }
 
 body.landscape-mode .game-shell {
@@ -433,7 +438,7 @@ body.landscape-mode .game-shell {
 
 body.landscape-mode .play-area {
   aspect-ratio: auto;
-  height: min(52vh, 440px);
+  height: min(68vh, 460px);
 }
 
 body.landscape-mode .hud {
@@ -443,10 +448,31 @@ body.landscape-mode .hud {
 body.landscape-mode .mobile-controls {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
-  max-height: 155px;
+  max-height: 112px;
   overflow-y: auto;
 }
 
 body.landscape-mode.computer-mode .mobile-controls {
   grid-template-columns: 1fr auto;
+}
+
+body.landscape-mode .touch-pad {
+  padding: 6px;
+}
+
+body.landscape-mode .touch-pad strong {
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+}
+
+body.landscape-mode .touch-grid,
+body.landscape-mode .touch-actions {
+  gap: 4px;
+}
+
+body.landscape-mode .touch-grid span,
+body.landscape-mode .touch-pad button,
+body.landscape-mode .touch-system button {
+  min-height: 32px;
+  font-size: 0.82rem;
 }

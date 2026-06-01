@@ -7,7 +7,7 @@
   <title>Sprinter Ball Game</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="src/styles.css?v=11">
+  <link rel="stylesheet" href="src/styles.css?v=13">
 </head>
 <body>
   <main class="game-shell">
@@ -95,11 +95,11 @@
         <strong>Player 1</strong>
         <div class="touch-grid">
           <span></span>
-          <button type="button" data-touch="w">Up</button>
+          <button type="button" data-touch="w" aria-label="Player 1 up">↑</button>
           <span></span>
-          <button type="button" data-touch="a">Left</button>
-          <button type="button" data-touch="s">Down</button>
-          <button type="button" data-touch="d">Right</button>
+          <button type="button" data-touch="a" aria-label="Player 1 left">←</button>
+          <button type="button" data-touch="s" aria-label="Player 1 down">↓</button>
+          <button type="button" data-touch="d" aria-label="Player 1 right">→</button>
         </div>
         <div class="touch-actions">
           <button type="button" data-touch="shift">Run</button>
@@ -110,11 +110,11 @@
         <strong>Player 2</strong>
         <div class="touch-grid">
           <span></span>
-          <button type="button" data-touch="arrowup">Up</button>
+          <button type="button" data-touch="arrowup" aria-label="Player 2 up">↑</button>
           <span></span>
-          <button type="button" data-touch="arrowleft">Left</button>
-          <button type="button" data-touch="arrowdown">Down</button>
-          <button type="button" data-touch="arrowright">Right</button>
+          <button type="button" data-touch="arrowleft" aria-label="Player 2 left">←</button>
+          <button type="button" data-touch="arrowdown" aria-label="Player 2 down">↓</button>
+          <button type="button" data-touch="arrowright" aria-label="Player 2 right">→</button>
         </div>
         <div class="touch-actions">
           <button type="button" data-touch="/">Run</button>
@@ -127,7 +127,7 @@
     </section>
   </main>
 
-  <script src="src/game.js?v=11"></script>
+  <script src="src/game.js?v=13"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
