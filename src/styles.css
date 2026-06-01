@@ -15,6 +15,7 @@ body {
   display: grid;
   place-items: center;
   overflow-y: auto;
+  overscroll-behavior: none;
   background:
     radial-gradient(circle at 18% 15%, rgba(50, 120, 76, 0.35), transparent 28%),
     linear-gradient(135deg, #182023 0%, #111618 52%, #1b2018 100%);
@@ -40,6 +41,7 @@ button:hover {
   width: min(1120px, calc(100vw - 24px));
   display: grid;
   gap: 12px;
+  padding: 12px 0;
 }
 
 .hud,
@@ -98,6 +100,7 @@ canvas {
   display: block;
   width: 100%;
   height: 100%;
+  touch-action: pan-y;
 }
 
 .message {
@@ -216,12 +219,21 @@ canvas {
   user-select: none;
 }
 
+.touch-system {
+  display: grid;
+  align-items: stretch;
+}
+
+.touch-system button {
+  min-height: 46px;
+}
+
 body.computer-mode .player-two-touch {
   display: none;
 }
 
 body.computer-mode .mobile-controls {
-  grid-template-columns: minmax(220px, 520px);
+  grid-template-columns: minmax(220px, 520px) auto;
   justify-content: center;
 }
 
@@ -311,7 +323,7 @@ body.computer-mode .mobile-controls {
 @media (max-width: 720px) {
   body {
     place-items: start center;
-    padding: 10px 0 260px;
+    padding: 0 0 250px;
   }
 
   .hud {
@@ -328,22 +340,85 @@ body.computer-mode .mobile-controls {
 }
 
 @media (pointer: coarse), (max-width: 760px) {
+  .game-shell {
+    width: min(100vw - 12px, 1120px);
+    padding-top: 6px;
+  }
+
+  .play-area {
+    min-height: 240px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .mobile-controls {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: sticky;
+    grid-template-columns: 1fr 1fr auto;
+    position: fixed;
+    left: 0;
+    right: 0;
     bottom: 0;
     z-index: 5;
     background: rgba(18, 23, 25, 0.92);
     border-top: 1px solid rgba(255, 255, 255, 0.14);
-    margin: 0 -12px;
     padding: 10px 12px;
     backdrop-filter: blur(8px);
+  }
+
+  .touch-grid {
+    grid-template-columns: repeat(3, minmax(44px, 1fr));
+    gap: 5px;
+  }
+
+  .touch-grid span,
+  .touch-pad button {
+    min-height: 40px;
   }
 }
 
 @media (max-width: 560px) {
+  body {
+    padding-bottom: 470px;
+  }
+
   .mobile-controls {
     grid-template-columns: 1fr;
+    max-height: 58vh;
+    overflow-y: auto;
+  }
+
+  body.computer-mode .mobile-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (pointer: coarse) and (orientation: landscape) {
+  body {
+    padding-bottom: 165px;
+  }
+
+  .game-shell {
+    width: min(100vw - 12px, 1120px);
+  }
+
+  .play-area {
+    aspect-ratio: auto;
+    height: min(52vh, 440px);
+  }
+
+  .hud {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .mobile-controls {
+    grid-template-columns: 1fr 1fr auto;
+    max-height: 155px;
+    overflow-y: auto;
+  }
+
+  body.computer-mode .mobile-controls {
+    grid-template-columns: 1fr auto;
   }
 }

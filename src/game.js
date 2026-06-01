@@ -2,6 +2,7 @@ const canvas = document.querySelector("#game");
 const ctx = canvas.getContext("2d");
 const startButton = document.querySelector("#startButton");
 const resetButton = document.querySelector("#resetButton");
+const mobileResetButton = document.querySelector("#mobileResetButton");
 const message = document.querySelector("#message");
 const helpButton = document.querySelector("#helpButton");
 const soundButton = document.querySelector("#soundButton");
@@ -96,6 +97,10 @@ function resetRound(switchSeeker = true) {
     player.hidePressed = false;
     player.hideCooldown = 0;
     player.stamina = 100;
+    player.aiDx = 0;
+    player.aiDy = 0;
+    player.aiRun = false;
+    player.aiHide = false;
   }
 
   if (state.round > state.maxRounds) {
@@ -104,6 +109,8 @@ function resetRound(switchSeeker = true) {
 }
 
 function fullReset() {
+  keys.clear();
+  touchKeys.clear();
   state = {
     started: false,
     round: 1,
@@ -601,6 +608,7 @@ startButton.addEventListener("click", () => {
 });
 
 resetButton.addEventListener("click", fullReset);
+mobileResetButton.addEventListener("click", fullReset);
 helpButton.addEventListener("click", openHelp);
 closeHelpButton.addEventListener("click", closeHelp);
 soundButton.addEventListener("click", () => {
