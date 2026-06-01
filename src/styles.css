@@ -939,35 +939,68 @@ body.landscape-mode .touch-system {
 
 @media (pointer: coarse) and (orientation: landscape) {
   .play-area .mobile-controls {
-    height: 66px;
-    padding: 0 2px 2px;
+    height: 72px;
+    padding: 0 8px 4px;
   }
 
   .play-area .touch-pad {
     bottom: 0;
-    width: min(23%, 106px);
+    display: grid;
+    grid-template-columns: 46px minmax(72px, 96px);
+    gap: 5px;
+    align-items: end;
+    width: min(36%, 160px);
   }
 
   .play-area .player-one-touch {
-    left: 0;
+    left: 6px;
   }
 
   .play-area .player-two-touch {
-    right: 0;
+    right: 6px;
+    grid-template-columns: minmax(72px, 96px) 46px;
+  }
+
+  .play-area .player-two-touch .touch-grid {
+    order: 1;
+  }
+
+  .play-area .player-two-touch .touch-actions {
+    order: 2;
+  }
+
+  .play-area .touch-grid {
+    gap: 2px;
   }
 
   .play-area .touch-grid span,
   .play-area .touch-grid button {
-    min-height: 19px;
+    min-height: 20px;
   }
 
   .play-area .touch-grid button {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .play-area .touch-actions,
+  .play-area .player-two-touch .touch-actions {
+    align-self: end;
+    margin: 0;
   }
 
   .play-area .touch-actions button {
-    min-height: 16px;
-    font-size: 0.5rem;
+    min-height: 22px;
+    font-size: 0.56rem;
+    padding: 0 3px;
+  }
+
+  .play-area .touch-system {
+    bottom: 6px;
+  }
+
+  .play-area .touch-system button {
+    min-height: 26px;
+    font-size: 0.66rem;
   }
 }
 
