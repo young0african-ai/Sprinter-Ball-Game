@@ -774,3 +774,90 @@ body.landscape-mode .touch-system {
     min-height: 0;
   }
 }
+
+@media (pointer: coarse) and (orientation: landscape) {
+  body {
+    padding: 4px 0;
+  }
+
+  .game-shell,
+  body.landscape-mode .game-shell {
+    width: min(92vw, 760px);
+    gap: 6px;
+  }
+
+  .hud {
+    gap: 5px;
+  }
+
+  .hud > div {
+    padding: 6px 8px;
+  }
+
+  .label {
+    font-size: 0.68rem;
+  }
+
+  .hud strong {
+    font-size: 0.9rem;
+  }
+
+  .play-area,
+  body.landscape-mode .play-area {
+    width: min(100%, calc((100dvh - 82px) * 1.548));
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 960 / 620;
+    justify-self: center;
+  }
+
+  .controls,
+  .mode-panel,
+  .credit {
+    display: none;
+  }
+
+  .touch-pad {
+    bottom: 4px;
+    width: min(34%, 145px);
+  }
+
+  .touch-grid {
+    grid-template-columns: repeat(3, minmax(30px, 1fr));
+  }
+
+  .touch-grid span,
+  .touch-grid button {
+    min-height: 28px;
+  }
+
+  .touch-grid button {
+    font-size: 1.1rem;
+  }
+
+  .touch-actions,
+  body.landscape-mode .touch-actions {
+    bottom: 62px;
+    width: min(54px, 12vw);
+    gap: 4px;
+  }
+
+  .touch-actions button {
+    min-height: 26px;
+    font-size: 0.68rem;
+  }
+
+  .touch-system,
+  body.landscape-mode .touch-system {
+    top: auto;
+    right: 50%;
+    bottom: 8px;
+    transform: translateX(50%);
+  }
+
+  .touch-system button {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: 0.72rem;
+  }
+}
