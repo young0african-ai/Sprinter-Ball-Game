@@ -685,7 +685,7 @@ body.landscape-mode .mobile-controls {
   .touch-actions {
     position: absolute;
     top: auto;
-    bottom: 126px;
+    bottom: 92px;
     left: 10px;
     right: auto;
     width: min(64px, 16vw);
@@ -717,7 +717,7 @@ body.landscape-mode .mobile-controls {
 @media (pointer: coarse) and (orientation: landscape) {
   .touch-actions {
     top: auto;
-    bottom: 92px;
+    bottom: 58px;
     left: 10px;
     right: auto;
     width: min(60px, 14vw);
@@ -736,7 +736,7 @@ body.landscape-mode .mobile-controls {
 
 body.landscape-mode .touch-actions {
   top: auto;
-  bottom: 92px;
+  bottom: 58px;
   left: 10px;
   right: auto;
   width: min(60px, 14vw);
@@ -837,7 +837,7 @@ body.landscape-mode .touch-system {
 
   .touch-actions,
   body.landscape-mode .touch-actions {
-    bottom: 62px;
+    bottom: 38px;
     width: min(54px, 12vw);
     gap: 4px;
   }
