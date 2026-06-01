@@ -113,6 +113,7 @@ canvas {
   padding: 24px;
   text-align: center;
   background: rgba(10, 16, 15, 0.72);
+  z-index: 6;
 }
 
 .message.victory {
@@ -263,6 +264,7 @@ body.computer-mode .mobile-controls {
   place-items: center;
   padding: 20px;
   background: rgba(7, 11, 12, 0.62);
+  z-index: 7;
 }
 
 .help-modal.hidden {
@@ -475,4 +477,93 @@ body.landscape-mode .touch-pad button,
 body.landscape-mode .touch-system button {
   min-height: 32px;
   font-size: 0.82rem;
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  body {
+    padding-bottom: 12px;
+  }
+
+  .play-area {
+    aspect-ratio: auto;
+    height: min(76vh, 620px);
+    min-height: 500px;
+  }
+
+  .mobile-controls {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    grid-template-columns: 1fr 1fr auto;
+    max-height: 46%;
+    overflow-y: auto;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    z-index: 5;
+  }
+
+  body.computer-mode .mobile-controls {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    padding-bottom: 12px;
+  }
+
+  .play-area {
+    height: min(78vh, 640px);
+    min-height: 520px;
+  }
+
+  .mobile-controls {
+    grid-template-columns: 1fr 1fr;
+    max-height: 48%;
+  }
+
+  .touch-system {
+    grid-column: 1 / -1;
+  }
+
+  body.computer-mode .mobile-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (pointer: coarse) and (orientation: landscape) {
+  .play-area {
+    height: min(74vh, 540px);
+    min-height: 320px;
+  }
+
+  .mobile-controls {
+    grid-template-columns: 1fr 1fr auto;
+    max-height: 42%;
+  }
+}
+
+body.landscape-mode {
+  padding-bottom: 12px;
+}
+
+body.landscape-mode .play-area {
+  height: min(74vh, 540px);
+  min-height: 320px;
+}
+
+body.landscape-mode .mobile-controls {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  grid-template-columns: 1fr 1fr auto;
+  max-height: 42%;
+  margin: 0;
+  padding: 8px;
+  border-radius: 8px;
+  z-index: 5;
 }
