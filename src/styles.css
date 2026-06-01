@@ -867,7 +867,7 @@ body.landscape-mode .touch-system {
     position: absolute;
     inset: auto 0 0 0;
     display: block;
-    height: 122px;
+    height: 104px;
     max-height: none;
     overflow: visible;
     padding: 0 6px 4px;
@@ -878,7 +878,7 @@ body.landscape-mode .touch-system {
   .play-area .touch-pad {
     position: absolute;
     bottom: 0;
-    width: min(42%, 180px);
+    width: min(38%, 160px);
   }
 
   .play-area .player-one-touch {
@@ -911,15 +911,49 @@ body.landscape-mode .touch-system {
     transform: translateX(50%);
     z-index: 8;
   }
+
+  .play-area .touch-grid {
+    gap: 2px;
+  }
+
+  .play-area .touch-actions {
+    gap: 2px;
+    margin-top: 2px;
+  }
+
+  .play-area .touch-grid span,
+  .play-area .touch-grid button {
+    min-height: 28px;
+  }
+
+  .play-area .touch-grid button {
+    font-size: 1.2rem;
+  }
+
+  .play-area .touch-actions button {
+    min-height: 22px;
+    padding: 0 4px;
+    font-size: 0.62rem;
+  }
 }
 
 @media (pointer: coarse) and (orientation: landscape) {
   .play-area .mobile-controls {
-    height: 96px;
+    height: 82px;
   }
 
   .play-area .touch-pad {
-    width: min(34%, 145px);
+    width: min(30%, 130px);
+  }
+
+  .play-area .touch-grid span,
+  .play-area .touch-grid button {
+    min-height: 24px;
+  }
+
+  .play-area .touch-actions button {
+    min-height: 20px;
+    font-size: 0.58rem;
   }
 }
 
