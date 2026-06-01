@@ -863,6 +863,67 @@ body.landscape-mode .touch-system {
 }
 
 @media (pointer: coarse), (max-width: 760px) {
+  .play-area .mobile-controls {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: block;
+    height: 122px;
+    max-height: none;
+    overflow: visible;
+    padding: 0 6px 4px;
+    margin: 0;
+    z-index: 5;
+  }
+
+  .play-area .touch-pad {
+    position: absolute;
+    bottom: 0;
+    width: min(42%, 180px);
+  }
+
+  .play-area .player-one-touch {
+    left: 8px;
+  }
+
+  .play-area .player-two-touch {
+    right: 8px;
+  }
+
+  .play-area .touch-actions,
+  .play-area .player-two-touch .touch-actions,
+  body.landscape-mode .play-area .touch-actions,
+  body.landscape-mode .play-area .player-two-touch .touch-actions {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: auto;
+    gap: 4px;
+    margin-top: 4px;
+    transform: none;
+  }
+
+  .play-area .touch-system,
+  body.landscape-mode .play-area .touch-system {
+    position: absolute;
+    top: auto;
+    right: 50%;
+    bottom: 0;
+    transform: translateX(50%);
+    z-index: 8;
+  }
+}
+
+@media (pointer: coarse) and (orientation: landscape) {
+  .play-area .mobile-controls {
+    height: 96px;
+  }
+
+  .play-area .touch-pad {
+    width: min(34%, 145px);
+  }
+}
+
+@media (pointer: coarse), (max-width: 760px) {
   .touch-actions,
   .player-two-touch .touch-actions,
   body.landscape-mode .touch-actions,

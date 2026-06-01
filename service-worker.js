@@ -1,9 +1,9 @@
-const CACHE_NAME = "sprinter-ball-v26";
+const CACHE_NAME = "sprinter-ball-v27";
 const FILES = [
   "./",
   "./index.html",
-  "./src/styles.css?v=26",
-  "./src/game.js?v=26",
+  "./src/styles.css?v=27",
+  "./src/game.js?v=27",
   "./manifest.webmanifest",
   "./assets/icon.svg",
   "./README.md"
