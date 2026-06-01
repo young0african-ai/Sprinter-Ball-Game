@@ -1,11 +1,12 @@
-const CACHE_NAME = "sprinter-ball-v5";
+const CACHE_NAME = "sprinter-ball-v6";
 const FILES = [
   "./",
   "./index.html",
-  "./src/styles.css?v=5",
-  "./src/game.js?v=5",
+  "./src/styles.css?v=6",
+  "./src/game.js?v=6",
   "./manifest.webmanifest",
-  "./assets/icon.svg"
+  "./assets/icon.svg",
+  "./README.md"
 ];
 
 self.addEventListener("install", (event) => {

@@ -3,6 +3,10 @@ const ctx = canvas.getContext("2d");
 const startButton = document.querySelector("#startButton");
 const resetButton = document.querySelector("#resetButton");
 const message = document.querySelector("#message");
+const helpButton = document.querySelector("#helpButton");
+const soundButton = document.querySelector("#soundButton");
+const howToPlay = document.querySelector("#howToPlay");
+const closeHelpButton = document.querySelector("#closeHelpButton");
 const seekerName = document.querySelector("#seekerName");
 const roundText = document.querySelector("#roundText");
 const timerText = document.querySelector("#timerText");
@@ -11,6 +15,8 @@ const scoreText = document.querySelector("#scoreText");
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const keys = new Set();
+let audioContext = null;
+let soundEnabled = true;
 
 const hidingSpots = [
   { x: 74, y: 68, w: 130, h: 74, type: "bush" },
@@ -101,7 +107,7 @@ function fullReset() {
   resetRound(false);
   state.round = 1;
   state.seeker = 0;
-  showMessage("Sprinter Ball", "Created by YoungOfAfrica. Player 1: WASD, Shift to run, E to hide. Player 2: Arrow keys, / to run, Enter to hide. The seeker tags the hider by touching them.", "Start Game");
+  showMessage("Sprinter Ball", "Created by YoungOfAfrica. Run, hide, and outsmart the seeker across 6 quick rounds.", "Start Game");
   updateHud();
 }
 
@@ -109,19 +115,23 @@ function startGame() {
   state.started = true;
   state.lastTick = performance.now();
   message.classList.add("hidden");
+  message.classList.remove("victory");
+  playSound("start");
 }
 
 function endGame() {
   state.started = false;
   const [p1, p2] = players;
-  const result = p1.score === p2.score ? "Draw game" : `${p1.score > p2.score ? p1.name : p2.name} wins`;
-  showMessage(result, `Final score: ${p1.score} - ${p2.score}. Press reset to play again.`, "Play Again");
+  const result = p1.score === p2.score ? "Draw Game" : `${p1.score > p2.score ? p1.name : p2.name} Wins`;
+  showMessage(result, `Final score: ${p1.score} - ${p2.score}. Great match. Play again and switch up your hiding strategy.`, "Play Again", true);
+  playSound("win");
 }
 
-function showMessage(title, text, buttonText) {
+function showMessage(title, text, buttonText, victory = false) {
   message.querySelector("h1").textContent = title;
   message.querySelector("p").textContent = text;
   startButton.textContent = buttonText;
+  message.classList.toggle("victory", victory);
   message.classList.remove("hidden");
 }
 
@@ -153,6 +163,7 @@ function updatePlayer(player, dt) {
       if (spot) {
         player.hiddenIn = spot;
         player.hideCooldown = 0.35;
+        playSound("hide");
       }
     }
   }
@@ -195,6 +206,7 @@ function checkTag() {
   if (hider.hiddenIn) return;
   if (Math.hypot(seeker.x - hider.x, seeker.y - hider.y) < seeker.r + hider.r + 5) {
     finishRound(seeker, `${seeker.name} found ${hider.name}`, "The seeker scores. Roles switch next round.");
+    playSound("tag");
   }
 }
 
@@ -210,6 +222,7 @@ function finishRound(scoringPlayer, title, text) {
 function showBetweenRound(title, text) {
   state.started = false;
   showMessage(title, text, "Next Round");
+  playSound("round");
 }
 
 function update(dt) {
@@ -400,6 +413,50 @@ function drawMiniHints() {
   ctx.fillText(hider.hiddenIn ? `${hider.name} is hidden` : `${hider.name} is visible`, 34, 48);
 }
 
+function getAudioContext() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioContext;
+}
+
+function playTone(frequency, duration, delay = 0, type = "sine", volume = 0.045) {
+  if (!soundEnabled) return;
+  const audio = getAudioContext();
+  const oscillator = audio.createOscillator();
+  const gain = audio.createGain();
+  oscillator.type = type;
+  oscillator.frequency.value = frequency;
+  gain.gain.setValueAtTime(0, audio.currentTime + delay);
+  gain.gain.linearRampToValueAtTime(volume, audio.currentTime + delay + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + delay + duration);
+  oscillator.connect(gain);
+  gain.connect(audio.destination);
+  oscillator.start(audio.currentTime + delay);
+  oscillator.stop(audio.currentTime + delay + duration);
+}
+
+function playSound(name) {
+  if (!soundEnabled) return;
+  const sounds = {
+    start: [[392, 0.08], [523, 0.1, 0.08]],
+    hide: [[220, 0.08, 0, "triangle"], [165, 0.12, 0.07, "triangle"]],
+    tag: [[180, 0.08, 0, "square"], [120, 0.12, 0.08, "square"]],
+    round: [[330, 0.08], [440, 0.09, 0.07], [550, 0.12, 0.14]],
+    win: [[392, 0.08], [523, 0.09, 0.09], [659, 0.1, 0.18], [784, 0.22, 0.3]],
+  };
+  for (const tone of sounds[name] || []) playTone(...tone);
+}
+
+function openHelp() {
+  howToPlay.classList.remove("hidden");
+  playSound("round");
+}
+
+function closeHelp() {
+  howToPlay.classList.add("hidden");
+}
+
 function loop(now) {
   const dt = Math.min(0.05, (now - state.lastTick) / 1000);
   state.lastTick = now;
@@ -430,6 +487,13 @@ startButton.addEventListener("click", () => {
 });
 
 resetButton.addEventListener("click", fullReset);
+helpButton.addEventListener("click", openHelp);
+closeHelpButton.addEventListener("click", closeHelp);
+soundButton.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+  soundButton.textContent = soundEnabled ? "Sound On" : "Sound Off";
+  if (soundEnabled) playSound("start");
+});
 
 fullReset();
 requestAnimationFrame(loop);

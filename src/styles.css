@@ -111,6 +111,17 @@ canvas {
   background: rgba(10, 16, 15, 0.72);
 }
 
+.message.victory {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(241, 189, 85, 0.24), transparent 32%),
+    rgba(10, 16, 15, 0.78);
+}
+
+.message.victory h1 {
+  color: #ffd06d;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
 .message.hidden {
   display: none;
 }
@@ -131,7 +142,7 @@ canvas {
 }
 
 .controls {
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr auto auto auto;
 }
 
 .controls > div {
@@ -146,6 +157,70 @@ canvas {
   color: #b8c5b2;
   font-size: 0.85rem;
   text-align: center;
+}
+
+.help-modal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(7, 11, 12, 0.62);
+}
+
+.help-modal.hidden {
+  display: none;
+}
+
+.help-panel {
+  width: min(680px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: #101819;
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.45);
+  padding: 22px;
+  text-align: left;
+}
+
+.help-panel h2 {
+  margin: 0 0 10px;
+  color: #ffe2a4;
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
+  letter-spacing: 0;
+}
+
+.help-panel p {
+  color: #edf4e8;
+  line-height: 1.45;
+  margin: 0 0 14px;
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.rules-grid > div {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 14px;
+}
+
+.rules-grid strong,
+.rules-grid span {
+  display: block;
+}
+
+.rules-grid strong {
+  color: #ffd06d;
+  margin-bottom: 7px;
+}
+
+.rules-grid span {
+  color: #c9d7c3;
+  margin-top: 4px;
 }
 
 .controls strong,
@@ -164,6 +239,10 @@ canvas {
   }
 
   .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-grid {
     grid-template-columns: 1fr;
   }
 }

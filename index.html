@@ -7,7 +7,7 @@
   <title>Sprinter Ball Game</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="src/styles.css?v=5">
+  <link rel="stylesheet" href="src/styles.css?v=6">
 </head>
 <body>
   <main class="game-shell">
@@ -37,6 +37,28 @@
         <p>Created by YoungOfAfrica. Player 1: WASD, Shift to run, E to hide. Player 2: Arrow keys, / to run, Enter to hide. The seeker tags the hider by touching them.</p>
         <button id="startButton" type="button">Start Game</button>
       </div>
+      <div id="howToPlay" class="help-modal hidden" role="dialog" aria-labelledby="howToPlayTitle">
+        <div class="help-panel">
+          <h2 id="howToPlayTitle">How to Play</h2>
+          <p>The seeker scores by catching the hider before the timer runs out. The hider scores by staying hidden until time is up.</p>
+          <div class="rules-grid">
+            <div>
+              <strong>Player 1</strong>
+              <span>Move with WASD</span>
+              <span>Run with Shift</span>
+              <span>Hide with E</span>
+            </div>
+            <div>
+              <strong>Player 2</strong>
+              <span>Move with Arrow keys</span>
+              <span>Run with /</span>
+              <span>Hide with Enter</span>
+            </div>
+          </div>
+          <p>Only the hider can hide. Step into bushes, tents, crates, or sheds, then press the hide key.</p>
+          <button id="closeHelpButton" type="button">Got It</button>
+        </div>
+      </div>
     </section>
 
     <section class="controls" aria-label="Controls">
@@ -52,13 +74,15 @@
         <span>/ run</span>
         <span>Enter hide</span>
       </div>
+      <button id="helpButton" type="button">How to Play</button>
+      <button id="soundButton" type="button">Sound On</button>
       <button id="resetButton" type="button">Reset</button>
     </section>
 
     <p class="credit">© 2026 YoungOfAfrica. All rights reserved.</p>
   </main>
 
-  <script src="src/game.js?v=5"></script>
+  <script src="src/game.js?v=6"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");
