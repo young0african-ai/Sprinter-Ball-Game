@@ -15,6 +15,7 @@ const scoreText = document.querySelector("#scoreText");
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const keys = new Set();
+const touchKeys = new Set();
 let audioContext = null;
 let soundEnabled = true;
 
@@ -153,7 +154,7 @@ function updatePlayer(player, dt) {
   const c = player.controls;
   if (player.hideCooldown > 0) player.hideCooldown -= dt;
 
-  const hidePressed = keys.has(c.hide);
+  const hidePressed = isPressed(c.hide);
   if (hidePressed && !player.hidePressed && player.hideCooldown <= 0) {
     if (player.hiddenIn) {
       player.hiddenIn = null;
@@ -173,10 +174,10 @@ function updatePlayer(player, dt) {
 
   let dx = 0;
   let dy = 0;
-  if (keys.has(c.up)) dy -= 1;
-  if (keys.has(c.down)) dy += 1;
-  if (keys.has(c.left)) dx -= 1;
-  if (keys.has(c.right)) dx += 1;
+  if (isPressed(c.up)) dy -= 1;
+  if (isPressed(c.down)) dy += 1;
+  if (isPressed(c.left)) dx -= 1;
+  if (isPressed(c.right)) dx += 1;
 
   if (dx || dy) {
     const length = Math.hypot(dx, dy);
@@ -184,7 +185,7 @@ function updatePlayer(player, dt) {
     dy /= length;
   }
 
-  const running = keys.has(c.run) && player.stamina > 2 && (dx || dy);
+  const running = isPressed(c.run) && player.stamina > 2 && (dx || dy);
   const speed = running ? 225 : 142;
   player.stamina = Math.max(0, Math.min(100, player.stamina + (running ? -38 : 24) * dt));
 
@@ -413,6 +414,10 @@ function drawMiniHints() {
   ctx.fillText(hider.hiddenIn ? `${hider.name} is hidden` : `${hider.name} is visible`, 34, 48);
 }
 
+function isPressed(key) {
+  return keys.has(key) || touchKeys.has(key);
+}
+
 function getAudioContext() {
   if (!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -475,6 +480,22 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("keyup", (event) => {
   keys.delete(event.key.toLowerCase());
 });
+
+for (const button of document.querySelectorAll("[data-touch]")) {
+  const key = button.dataset.touch;
+  const press = (event) => {
+    event.preventDefault();
+    touchKeys.add(key);
+  };
+  const release = (event) => {
+    event.preventDefault();
+    touchKeys.delete(key);
+  };
+  button.addEventListener("pointerdown", press);
+  button.addEventListener("pointerup", release);
+  button.addEventListener("pointercancel", release);
+  button.addEventListener("pointerleave", release);
+}
 
 startButton.addEventListener("click", () => {
   if (state.round > state.maxRounds) {

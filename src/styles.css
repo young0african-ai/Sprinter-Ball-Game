@@ -145,6 +145,49 @@ canvas {
   grid-template-columns: 1fr 1fr auto auto auto;
 }
 
+.mobile-controls {
+  display: none;
+  gap: 10px;
+}
+
+.touch-pad {
+  background: rgba(8, 14, 15, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.touch-pad strong {
+  display: block;
+  color: #ffd06d;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.touch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(54px, 1fr));
+  gap: 7px;
+}
+
+.touch-grid span {
+  min-height: 42px;
+}
+
+.touch-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+.touch-pad button {
+  min-height: 46px;
+  padding: 0 10px;
+  touch-action: none;
+  user-select: none;
+}
+
 .controls > div {
   display: flex;
   flex-wrap: wrap;
@@ -243,6 +286,19 @@ canvas {
   }
 
   .rules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  .mobile-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .mobile-controls {
     grid-template-columns: 1fr;
   }
 }

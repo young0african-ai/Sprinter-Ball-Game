@@ -7,7 +7,7 @@
   <title>Sprinter Ball Game</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="src/styles.css?v=6">
+  <link rel="stylesheet" href="src/styles.css?v=7">
 </head>
 <body>
   <main class="game-shell">
@@ -80,9 +80,41 @@
     </section>
 
     <p class="credit">© 2026 YoungOfAfrica. All rights reserved.</p>
+    <section class="mobile-controls" aria-label="Touch controls">
+      <div class="touch-pad">
+        <strong>Player 1</strong>
+        <div class="touch-grid">
+          <span></span>
+          <button type="button" data-touch="w">Up</button>
+          <span></span>
+          <button type="button" data-touch="a">Left</button>
+          <button type="button" data-touch="s">Down</button>
+          <button type="button" data-touch="d">Right</button>
+        </div>
+        <div class="touch-actions">
+          <button type="button" data-touch="shift">Run</button>
+          <button type="button" data-touch="e">Hide</button>
+        </div>
+      </div>
+      <div class="touch-pad">
+        <strong>Player 2</strong>
+        <div class="touch-grid">
+          <span></span>
+          <button type="button" data-touch="arrowup">Up</button>
+          <span></span>
+          <button type="button" data-touch="arrowleft">Left</button>
+          <button type="button" data-touch="arrowdown">Down</button>
+          <button type="button" data-touch="arrowright">Right</button>
+        </div>
+        <div class="touch-actions">
+          <button type="button" data-touch="/">Run</button>
+          <button type="button" data-touch="enter">Hide</button>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script src="src/game.js?v=6"></script>
+  <script src="src/game.js?v=7"></script>
   <script>
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js");

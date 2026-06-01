@@ -12,6 +12,7 @@ One player is the seeker. The other player is the hider. Run through the map, du
 - Tagging, timed rounds, role switching, and scoring
 - How to Play screen
 - Sound effects with a sound toggle
+- Automatic touch controls on phones and tablets
 - Installable web app setup with an icon and offline cache
 
 ## How to Play
